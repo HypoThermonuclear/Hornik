@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    width: 100vw;
+    height: 100vh;
+
+    background: #323232;
+}
+
+#main-game {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+}
+
+#stuff {
+    width: 30%;
+    height: 100%;
+
+    border-right: 3px solid #161616;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+#backpack {
+    width: 90%;
+    height: 148px;
+
+    background: #242424;
+    border: 6px solid #161616;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#backpack-content {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    flex-flow: row wrap;
+    gap: 8px;
+}
+
+.backpack-slot {
+    width: 64px;
+    height: 64px;
+
+    border: 6px solid #161616;
+    transition: 200ms;
+}
+
+.backpack-slot:hover {
+    filter: brightness(0);
+}
+
+#game-container {
+    width: 70%;
+    height: 100%;
+
+    background: #242424;
+    border-left: 3px solid #161616;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+#game {
+    width: 95%;
+    height: 95%;
+
+    border: 6px solid #161616;
+}
+
+p {
+    font-family: "Roboto";
+    font-weight: bold;
+    color: white;
+}
+
+.big-header {
+    font-size: 48px;
+    margin: 16px;
+}
+
+.medium-header {
+    font-size: 32px;
+    margin: 8px;
+}
