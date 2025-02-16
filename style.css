@@ -1,3 +1,7 @@
+img {
+    image-rendering: pixelated;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -32,7 +36,7 @@
 
 #backpack {
     width: 90%;
-    height: 148px;
+    height: 56px;
 
     background: #242424;
     border: 6px solid #161616;
@@ -56,12 +60,14 @@
     width: 64px;
     height: 64px;
 
+    display: none;
+
     border: 6px solid #161616;
     transition: 200ms;
 }
 
 .backpack-slot:hover {
-    filter: brightness(0);
+    border: 6px solid #080808;
 }
 
 #game-container {

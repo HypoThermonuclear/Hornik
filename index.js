@@ -1,5 +1,6 @@
-const depthDisplay = document.getElementById("depth-display");
-
+//! Variables
+// Map and rendering
+let tileSize = 160;
 let textures = {};
 let map = [
   ["A", "A", "A", "A", "A", "A", "A", "A"], // Air layer
@@ -19,7 +20,28 @@ let map = [
   ["D", "D", "D", "D", "D", "D", "D", "D"],
 ];
 
+// Items (Textures)
+let pickaxeSrc = "Assets/items/pickaxe.png";
+
+// Backpack & Inventory
+const backpackDisplay = document.getElementById("backpack");
+const backpackSlotsDisplay = document.getElementsByClassName("backpack-slot");
+let backpackSlots = 12;
+let activeSlot = 0;
+
+let inventory = [];
+let inventoryItems = 0;
+
+// Player
+const depthDisplay = document.getElementById("depth-display");
+let depth = 0;
+let xPos = 4;
+let yPos = 2;
+
+//! Functions
+
 function preload() {
+    // p5js Canvas Textures
     textures["A"] = loadImage("Assets/Blocks/sky.png");
     textures["B"] = loadImage("Assets/Blocks/grass.png");
     textures["C"] = loadImage("Assets/Blocks/dirt.png");
@@ -31,25 +53,16 @@ function preload() {
     textures["4"] = loadImage("Assets/Blocks/diamond_ore.png");
 
     playerImage = loadImage("Assets/player.png");
-
-    //  = loadImage("Assets/Blocks/copper_block.png");
-    //  = loadImage("Assets/Blocks/iron_block.png");
-    //  = loadImage("Assets/Blocks/gold_block.png");
-    //  = loadImage("Assets/Blocks/diamond_block.png");
 }
-
-let tileSize = 160;
-// Start Pos x4, y2
-let xPos = 4;
-let yPos = 2;
-
-let depth = 0;
 
 function setup() {
     createCanvas(1280, document.querySelector("#game").getBoundingClientRect().height, game);
     colorMode(RGB, 255);
     noSmooth();
+
+    update();
 }
+
 
 function draw() {
     for (let row = 0; row < map.length; row++) {
@@ -63,12 +76,33 @@ function draw() {
     image(playerImage, xPos * tileSize, yPos * tileSize, tileSize, tileSize);
 }
 
-function updateDisplays() {
+// Update everything
+function update() {
     depthDisplay.textContent = "Depth: " + depth;
-}
 
-// image(blockSky, 0, 0, 160, 160);
-// 1280 / 8 = 160
+    // Display the proper amount of backpack slots
+    for (let i = 0; i < backpackSlots; i++) {
+        backpackSlotsDisplay[i].style.display = "flex";
+    }
+
+    // Change the backpack height so it matches the slot count
+    backpackDisplay.style.height = (56 + 88 * Math.ceil(backpackSlots / 6)) + "px";
+
+    // Clear previous images before adding new ones
+    for (let i = 0; i < backpackSlots; i++) {
+        backpackSlotsDisplay[i].innerHTML = "";
+    }
+
+    // Add items to inventory
+    for (let i = 0; i < inventoryItems; i++) {
+        let img = document.createElement("img");
+        img.src = inventory[i];
+        backpackSlotsDisplay[i].appendChild(img);
+    }
+
+    // Change display of current slot
+    backpackSlotsDisplay[activeSlot].style.border = "6px solid #a0a0a0";
+}
 
 function keyPressed() {
     switch (key) {
@@ -78,7 +112,7 @@ function keyPressed() {
         case "a":
             xPos--;
             break;
-        case "s":
+        case "s": 
             depth--;
             break;
         case "d":
@@ -90,19 +124,36 @@ function keyPressed() {
     if (xPos >= 8) xPos--;
     if (depth > 0) depth--;
 
-    updateDisplays();
+    // Make all slots unselected in case user selects a new one
+    backpackSlotsDisplay.forEach(slot => {
+        slot.style.border = "6px solid #161616";
+    });
+
+    // Change the active slot
+    if (key >= 1 && key <= 9) activeSlot = key - 1;
+    if (key == "0") activeSlot = 9;
+    if (key == "-") activeSlot = 10;
+    if (key == "=") activeSlot = 11;
+
+    if (key == "q" && activeSlot != 0) activeSlot--;
+    if (key == "e" && activeSlot != backpackSlots - 1) activeSlot++;
+    if (key == "Q") activeSlot = 0;
+    if (key == "E") activeSlot = backpackSlots - 1;
+
+    update();
 }
 
-
-
-
-
-
-// temp functions
-function down() {
-    depth--;
+// Notify user when backpack full
+function fullBackpack() {
+    console.log("your backpack is full sillyhead, cant add item");
 }
 
-function up() {
-    depth++;
+// Add pickaxe to backpack
+function addPickaxe() {
+    if (inventoryItems >= backpackSlots) fullBackpack();
+    else {
+        inventoryItems++;
+        inventory.push(pickaxeSrc);
+        update();
+    }
 }
