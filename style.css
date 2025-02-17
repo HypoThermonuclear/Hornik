@@ -83,6 +83,100 @@ img {
     overflow-y: auto;
 }
 
+#shop {
+    position: absolute;
+    width: 50%;
+    height: 80%;
+
+    background: #323232;
+    border: 6px solid #161616;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#shop-categories {
+    width: 90%;
+    height: 10%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#shop-categories > button {
+    width: 30%;
+    height: 80%;
+
+    background: #242424;
+    border: 6px solid #161616;
+    color: white;
+    font-weight: bold;
+    font-size: 32px;
+    transition: 200ms;
+}
+
+#shop-categories > button:hover {
+    cursor: pointer;
+}
+
+#shop-items {
+    width: 90%;
+    height: 70%;
+
+    overflow-y: scroll;
+}
+
+.shop-item {
+    width: 90%;
+    height: 256px;
+
+    background: #202020;
+    border: 6px solid #161616;
+
+    display: flex;
+    flex-direction: row;
+    justify-self: center;
+    margin: 16px;
+}
+
+.shop-item button {
+    width: 90%;
+    height: 25%;
+
+    background: #202020;
+    border: 6px solid #161616;
+    color: white;
+    font-weight: bold;
+    font-size: 32px;
+    transition: 200ms;
+}
+
+.shop-item button:hover {
+    cursor: pointer;
+    background: #646464;
+}
+
+.shop-item-details {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shop-item-description {
+    width: 100%;
+    height: 50%;
+}
+
+.shop-item-description p {
+    align-self: flex-start
+}
+
 #game {
     width: 95%;
     height: 95%;

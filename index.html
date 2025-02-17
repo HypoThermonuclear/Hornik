@@ -16,6 +16,8 @@
         <div id="main-game">
             <div id="stuff">
                 <p class="big-header">Hornik</p>
+                <p id="money-display" class="medium-header">Money: 0 $</p>
+                <p id="depth-display" class="medium-header">Depth: 0 ^</p>
                 <div id="backpack">
                     <p class="medium-header">Backpack</p>
                     <div id="backpack-content">
@@ -31,24 +33,126 @@
                         <div class="backpack-slot"></div>
                         <div class="backpack-slot"></div>
                         <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
-                        <div class="backpack-slot"></div>
                     </div>
                 </div>
-                <p id="depth-display" class="medium-header">Depth: 0</p>
-                <button onclick="addPickaxe()" style="width: 50%; height: 10%;"> Add pickaxe</button>
+
+                <button onclick="money++">add money</button>
+                <button onclick="copper++; inventoryItems++; inventory.push(copperSrc); update()">add copper</button>
+                <button onclick="iron++; inventoryItems++; inventory.push(ironSrc); update()">add iron</button>
+                <button onclick="gold++; inventoryItems++; inventory.push(goldSrc); update()">add gold</button>
+                <button onclick="diamond++; inventoryItems++; inventory.push(diamondSrc); update()">add diamond</button>
             </div>
             <div id="game-container">
+                <div id="shop" style="display: none">
+                    <p class="big-header">Shop</p>
+                    <div id="shop-categories">
+                        <button id="switch-to-sell-button" onclick="switchToSell()">Sell</button>
+                        <button id="switch-to-buy-button" onclick="switchToBuy()">Buy</button>
+                    </div>
+                    <div id="shop-items">
+                        <div id="sell-items" style="display: none">
+                            <div class="shop-item" id="sell-copper-material">
+                                <img src="Assets/Items/copper_material.png" draggable="false">
+                                <div class="shop-item-details">
+                                    <p class="medium-header">Copper Material</p>
+                                    <div class="shop-item-description">
+                                        <p>The most common material around here.</p>
+                                        <p>It's not worth much.</p>
+                                    </div>
+                                    <button onclick="sellCopperMaterial()">2$</button>
+                                </div>
+                            </div>
+
+                            <div class="shop-item" id="sell-iron-material" style="display: none">
+                                <img src="Assets/Items/iron_material.png" draggable="false">
+                                <div class="shop-item-details">
+                                    <p class="medium-header">Iron Material</p>
+                                    <div class="shop-item-description">
+                                        <p>Uncommon material found deeper underground.</p>
+                                        <p>The price is decent.</p>
+                                    </div>
+                                    <button onclick="sellIronMaterial()">5$</button>
+                                </div>
+                            </div>
+
+                            <div class="shop-item" id="sell-gold-material" style="display: none">
+                                <img src="Assets/Items/gold_material.png" draggable="false">
+                                <div class="shop-item-details">
+                                    <p class="medium-header">Gold Material</p>
+                                    <div class="shop-item-description">
+                                        <p>Rare material, rarely seen in this strange place.</p>
+                                        <p>Many people offer a fair price.</p>
+                                    </div>
+                                    <button onclick="sellGoldMaterial()">11$</button>
+                                </div>
+                            </div>
+
+                            <div class="shop-item" id="sell-diamond-material" style="display: none">
+                                <img src="Assets/Items/diamond_material.png" draggable="false">
+                                <div class="shop-item-details">
+                                    <p class="medium-header">Diamond Material</p>
+                                    <div class="shop-item-description">
+                                        <p>Does it really exist around here? Many people doubt that.</p>
+                                        <p>If you find one, you may earn a fortune</p>
+                                    </div>
+                                    <button onclick="sellDiamondMaterial()">45$</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div id="buy-items" style="display: none">
+                            <div class="shop-item" id="copper-pickaxe-upgrade">
+                                <img src="Assets/Items/pickaxe_copper.png" draggable="false">
+                                <div class="shop-item-details">
+                                    <p class="medium-header">Copper Pickaxe Upgrade</p>
+                                    <div class="shop-item-description">
+                                        <p>Enhance your pickaxe with copper to increase mining power.</p>
+                                        <p>After upgrading you can break iron ores.</p>
+                                    </div>
+                                    <button onclick="buyCopperPickaxeUpgrade()">6$, 3 Copper Material</button>
+                                </div>
+                            </div>
+
+                            <div class="shop-item" id="iron-pickaxe-upgrade" style="display: none">
+                                <img src="Assets/Items/pickaxe_iron.png" draggable="false">
+                                <div class="shop-item-details">
+                                    <p class="medium-header">Iron Pickaxe Upgrade</p>
+                                    <div class="shop-item-description">
+                                        <p>Enhance your pickaxe with copper to increase mining power.</p>
+                                        <p>After upgrading you can break gold ores.</p>
+                                    </div>
+                                    <button onclick="buyIronPickaxeUpgrade()">14$, 5 Iron Material</button>
+                                </div>
+                            </div>
+
+                            <div class="shop-item" id="gold-pickaxe-upgrade" style="display: none">
+                                <img src="Assets/Items/pickaxe_gold.png" draggable="false">
+                                <div class="shop-item-details">
+                                    <p class="medium-header">Gold Pickaxe Upgrade</p>
+                                    <div class="shop-item-description">
+                                        <p>Enhance your pickaxe with copper to increase mining power.</p>
+                                        <p>After upgrading you can break diamond ores.</p>
+                                    </div>
+                                    <button onclick="buyGoldPickaxeUpgrade()">36$, 7 Gold Material</button>
+                                </div>
+                            </div>
+
+                            <div class="shop-item" id="diamond-pickaxe-upgrade" style="display: none">
+                                <img src="Assets/Items/pickaxe_diamond.png" draggable="false">
+                                <div class="shop-item-details">
+                                    <p class="medium-header">Diamond Pickaxe Upgrade</p>
+                                    <div class="shop-item-description">
+                                        <p>Enhance your pickaxe with copper to increase mining power.</p>
+                                        <p>After upgrading you can break something...</p>
+                                    </div>
+                                    <button onclick="buyDiamondPickaxeUpgrade()">100$, 10 Diamond Material</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <canvas id="game"></canvas>
             </div>
         </div>
